@@ -1,73 +1,191 @@
-# React + TypeScript + Vite
+# ✈️ Flight Search Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive flight search application with real-time filtering and interactive price visualization built for the Spotter technical assessment.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+[View Live Demo](#) _(Will be updated after deployment)_
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎥 Demo Video
+[Watch Loom Demo](#) _(Will be added after recording)_
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Real-time Flight Search** - Search flights using the Amadeus API with origin, destination, and date inputs
+- **Complex Filtering** - Simultaneous filters for number of stops, price range, and airlines that update results instantly
+- **Live Price Visualization** - Interactive bar chart showing average prices by airline using Recharts
+- **Stats Dashboard** - Quick overview displaying total flights, best price, average price, and number of airlines
+- **Best Deal Highlighting** - Automatically highlights the cheapest flight option with a special badge
+- **Fully Responsive** - Seamless experience on mobile (drawer navigation) and desktop devices
+- **Type-Safe** - Built with TypeScript with complete type coverage and zero `any` types
+- **Smart Loading States** - Elegant loading animations and comprehensive error handling
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 18** - UI library with hooks
+- **TypeScript** - Complete type safety throughout the application
+- **TanStack Query** - Efficient data fetching, caching, and state management
+- **Recharts** - Data visualization library for interactive charts
+- **Tailwind CSS** - Utility-first CSS framework for responsive design
+- **Lucide React** - Beautiful, consistent icon library
+- **Vite** - Lightning-fast build tooling and dev server
+- **Amadeus API** - Real-time flight data from the travel industry's leading API
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Installation & Setup
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
+- Node.js 18+ and npm
+- Amadeus API credentials (free tier available)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Clone the repository
+```bash
+git clone https://github.com/yourusername/flight-search-engine.git
+cd flight-search-engine
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Install dependencies
+```bash
+npm install
 ```
+
+### 3. Set up environment variables
+
+Create a `.env` file in the root directory:
+```env
+VITE_AMADEUS_KEY=your_amadeus_api_key
+VITE_AMADEUS_SECRET=your_amadeus_api_secret
+```
+
+### 4. Run development server
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## 🔑 Getting Amadeus API Credentials
+
+1. Visit [Amadeus for Developers](https://developers.amadeus.com/)
+2. Sign up for a free account
+3. Create a new app in the Self-Service portal
+4. Copy your **API Key** and **API Secret** from the Test environment
+5. Add these credentials to your `.env` file
+
+## 📁 Project Structure
+
+```
+src/
+├── api/
+│   └── amadeus.ts          # API client with authentication
+├── components/
+│   ├── Home.tsx            # Main component with search, filters, and results
+│   └── SearchForm.tsx      # Search input form component
+├── hooks/
+│   └── useFlights.ts       # TanStack Query hook for flight data
+├── types/
+│   ├── flight.ts           # Flight data interface
+│   └── amadeus-types.ts    # Complete Amadeus API response types
+└── utils/
+    └── normalizeFlights.ts # Transform API responses to application format
+```
+
+## 🎨 Key Features Explained
+
+### Dynamic Filtering System
+All three filters (stops, price, airlines) work simultaneously and update both the flight list and price graph in real-time, providing instant visual feedback.
+
+### Price Visualization
+The bar chart displays the average price per airline, making it easy to compare pricing across carriers at a glance. Each airline is assigned a distinct color automatically.
+
+### Mobile-First Responsive Design
+The filter system adapts to mobile devices with a slide-out drawer interface, ensuring full functionality and usability across all screen sizes.
+
+### Complete Type Safety
+100% TypeScript coverage with properly typed Amadeus API responses, eliminating runtime type errors and providing excellent IDE autocomplete.
+
+## 🧪 Available Scripts
+
+```bash
+# Start development server
+npm run dev
+
+# Type check without building
+npm run type-check
+
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+
+# Run linter
+npm run lint
+```
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Visit [vercel.com](https://vercel.com) and sign in
+3. Click "New Project" and import your repository
+4. Add environment variables in project settings:
+    - `VITE_AMADEUS_KEY`
+    - `VITE_AMADEUS_SECRET`
+5. Click "Deploy"
+
+### Netlify
+
+1. Push your code to GitHub
+2. Visit [netlify.com](https://netlify.com) and sign in
+3. Click "New site from Git" and select your repository
+4. Build settings:
+    - Build command: `npm run build`
+    - Publish directory: `dist`
+5. Add environment variables in "Site settings" → "Environment variables"
+6. Click "Deploy site"
+
+## 🎯 Implementation Highlights
+
+- **Efficient Data Fetching**: TanStack Query handles request caching and deduplication, preventing unnecessary API calls
+- **Optimized State Management**: React hooks with proper dependency arrays for optimal re-renders
+- **Comprehensive Error Handling**: Graceful error states for API failures with user-friendly messages
+- **Professional UI/UX**: Attention to visual hierarchy, loading states, empty states, and interactive feedback
+- **Clean Code Architecture**: Separation of concerns with dedicated folders for API, components, hooks, types, and utilities
+
+## 🎥 Demo Video Highlights
+
+In the Loom demo, I showcase:
+- Complete search workflow from input to results
+- Real-time filter interactions and graph updates
+- Mobile responsive design with drawer navigation
+- Technical implementation decisions and architecture
+- Code quality and TypeScript usage
+
+## 🎓 Assessment Requirements Met
+
+This project fulfills all requirements for the Spotter technical assessment:
+
+- ✅ **Search & Results**: Full search interface with origin, destination, and date inputs feeding into a clear results list
+- ✅ **Live Price Graph**: Interactive visualization using Recharts that updates in real-time with filter changes
+- ✅ **Complex Filtering**: Three simultaneous filters (stops, price, airlines) that instantly update both list and graph
+- ✅ **Responsive Design**: Fully functional layouts optimized for both mobile and desktop experiences
+
+Additional polish added:
+- Stats dashboard with key metrics
+- Best deal highlighting
+- Professional gradient design
+- Comprehensive TypeScript types
+- Error and loading states
+
+## 👨‍💻 Developer
+
+**Fagoroye**
+- GitHub: github.com/matthew0072-design
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+---
+
+*Built with ❤️ for the Spotter interview process*
