@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { SearchParams } from "../api/amadeus.ts";
 import { SearchForm } from '../components/SearchForm'
+import { FlightSkeleton} from "../components/FlightSkeleton";
 import { useFlights } from '../hooks/useFlights'
 import {
     BarChart,
@@ -23,6 +24,7 @@ export function Home() {
     const [maxPrice, setMaxPrice] = useState<number>(1000)
     const [selectedAirlines, setSelectedAirlines] = useState<string[]>([])
     const [showFilters, setShowFilters] = useState<boolean>(false)
+    const isDisabled = isLoading
 
     // Filter flights
     const filteredFlights = flights?.filter((f) => {
@@ -73,7 +75,7 @@ export function Home() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
             {/* Hero Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-12 px-4 shadow-lg">
+            <div className="bg-gradient-to-r from-cyan-600 to-indigo-600 text-white py-12 px-4 shadow-lg">
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center gap-3 mb-4">
                         <Plane className="w-10 h-10" />
@@ -157,8 +159,11 @@ export function Home() {
                                         { value: 2, label: '2+ Stops' }
                                     ].map(({ value, label }) => (
                                         <button
+                                            disabled={isDisabled}
                                             key={value}
-                                            className={`px-4 py-2 rounded-lg cursor-pointer border-2 font-medium transition-all ${
+                                            className={`px-4 py-2 rounded-lg border-2 font-medium transition-all 
+                                            ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+                                            ${
                                                 maxStops === value
                                                     ? 'bg-blue-600 text-white border-blue-600 shadow-md'
                                                     : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
@@ -183,8 +188,11 @@ export function Home() {
                                         { value: 1000, label: 'Under $1000' }
                                     ].map(({ value, label }) => (
                                         <button
+                                            disabled={isDisabled}
                                             key={value}
-                                            className={`px-4 py-2 rounded-lg border-2 font-medium cursor-pointer transition-all ${
+                                            className={`px-4 py-2 rounded-lg border-2 font-medium transition-all 
+                                            ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+                                            ${
                                                 maxPrice === value
                                                     ? 'bg-green-600 text-white border-green-600 shadow-md'
                                                     : 'bg-white text-gray-700 border-gray-300 hover:border-green-400'
@@ -206,8 +214,11 @@ export function Home() {
                                     {availableAirlines.length > 0 ? (
                                         availableAirlines.map((airline) => (
                                             <button
+                                                disabled={isDisabled}
                                                 key={airline}
-                                                className={`px-4 py-2 rounded-lg border-2 cursor-pointer font-medium transition-all ${
+                                                className={`px-4 py-2 rounded-lg border-2 font-medium transition-all
+                                                 ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+                                                 ${
                                                     selectedAirlines.includes(airline)
                                                         ? 'bg-purple-600 text-white border-purple-600 shadow-md'
                                                         : 'bg-white text-gray-700 border-gray-300 hover:border-purple-400'
@@ -226,7 +237,7 @@ export function Home() {
                     </div>
                 </div>
 
-                {/* Price Graph - Enhanced */}
+                {/* Price Graph */}
                 {priceData.length > 0 && (
                     <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
                         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -257,14 +268,9 @@ export function Home() {
                 {/* Loading State */}
                 {isLoading && (
                     <div className="space-y-4">
-                        {Array(5)
-                            .fill(0)
-                            .map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="h-32 bg-white rounded-xl shadow-md animate-pulse"
-                                />
-                            ))}
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <FlightSkeleton key={i} />
+                        ))}
                     </div>
                 )}
 
@@ -285,7 +291,7 @@ export function Home() {
                     </div>
                 )}
 
-                {/* Flight List - Enhanced Cards */}
+                {/* Flight List */}
                 {!isLoading && sortedFlights.length > 0 && (
                     <div className="space-y-4">
                         {sortedFlights.map((f, index) => (
@@ -300,7 +306,7 @@ export function Home() {
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                                     {/* Airline & Best Deal Badge */}
                                     <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                                        <div className="w-12 h-12 bg-gradient-to-r from-cyan-600 to-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
                                             {f.airline.substring(0, 2)}
                                         </div>
                                         <div>

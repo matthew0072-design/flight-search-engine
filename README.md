@@ -1,6 +1,6 @@
 # ✈️ Flight Search Engine
 
-A modern, responsive flight search application with real-time filtering and interactive price visualization built for the Spotter technical assessment.
+A modern, responsive flight search application that allows users to explore, filter, and compare flight options in real time, with a strong focus on performance, usability, and clean engineering.
 
 ## 🚀 Live Demo
 [View Live Demo](#) _(Will be updated after deployment)_
@@ -16,14 +16,14 @@ A modern, responsive flight search application with real-time filtering and inte
 - **Stats Dashboard** - Quick overview displaying total flights, best price, average price, and number of airlines
 - **Best Deal Highlighting** - Automatically highlights the cheapest flight option with a special badge
 - **Fully Responsive** - Seamless experience on mobile (drawer navigation) and desktop devices
-- **Type-Safe** - Built with TypeScript with complete type coverage and zero `any` types
+- **Type-Safe by Design** - Strongly typed throughout the application, including API responses and derived state, to reduce runtime errors and improve maintainability.
 - **Smart Loading States** - Elegant loading animations and comprehensive error handling
 
 ## 🛠️ Tech Stack
 
 - **React 18** - UI library with hooks
 - **TypeScript** - Complete type safety throughout the application
-- **TanStack Query** - Efficient data fetching, caching, and state management
+- **TanStack Query** - Server-state management with caching and request deduplication
 - **Recharts** - Data visualization library for interactive charts
 - **Tailwind CSS** - Utility-first CSS framework for responsive design
 - **Lucide React** - Beautiful, consistent icon library
@@ -179,7 +179,8 @@ Additional polish added:
 
 ## 👨‍💻 Developer
 
-**Fagoroye**
+**Fagoroye Ayobami**
+- Frontend / Full-Stack Engineer
 - GitHub: github.com/matthew0072-design
 
 ## 📄 License
