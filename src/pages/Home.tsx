@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { SearchParams } from "../api/amadeus.ts";
 import { SearchForm } from '../components/SearchForm'
 import { FlightSkeleton} from "../components/FlightSkeleton";
@@ -26,6 +26,31 @@ export function Home() {
     const [showFilters, setShowFilters] = useState<boolean>(false)
     const isDisabled = isLoading
 
+    // Close mobile drawer when resizing to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 768) {
+                setShowFilters(false)
+            }
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    // Prevent body scroll when mobile drawer is open
+    useEffect(() => {
+        if (showFilters && window.innerWidth < 768) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset'
+        }
+    }, [showFilters])
+
     // Filter flights
     const filteredFlights = flights?.filter((f) => {
         const matchesStops = f.stops <= maxStops
@@ -38,7 +63,7 @@ export function Home() {
     // Sort by price
     const sortedFlights = [...filteredFlights].sort((a, b) => a.price - b.price)
 
-    // Enhanced price data - Average price by airline
+    // price data - Average price by airline
     const priceData = Object.entries(
         sortedFlights.reduce((acc, f) => {
             if (!acc[f.airline]) acc[f.airline] = { total: 0, count: 0 }
@@ -88,7 +113,7 @@ export function Home() {
             </div>
 
             <div className="max-w-5xl mx-auto px-4 -mt-8">
-                {/* Search Form - Elevated Card */}
+                {/* Search Form - Card */}
                 <div className="bg-white rounded-2xl shadow-2xl p-6 mb-8">
                     <SearchForm onSearch={(params) => setSearchParams(params)} />
                 </div>
@@ -130,22 +155,49 @@ export function Home() {
                     {showFilters ? 'Hide Filters' : 'Show Filters'}
                 </button>
 
-                <div
-                    className={`fixed inset-0 z-50 md:relative md:block ${
-                        showFilters ? 'block' : 'hidden'
-                    }`}
-                >
-                    <div
-                        className="md:hidden absolute inset-0 bg-black bg-opacity-50"
-                        onClick={() => setShowFilters(false)}
-                    />
+                {/* Filters - Desktop always visible, Mobile drawer */}
+                <div className="mb-6">
+                    {/* Mobile Overlay */}
+                    {showFilters && (
+                        <div
+                            className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+                            onClick={() => setShowFilters(false)}
+                        />
+                    )}
 
-                    <div className="md:static absolute top-0 left-0 w-4/5 md:w-full h-full md:h-auto bg-white md:bg-transparent p-6 md:p-0 shadow-2xl md:shadow-none overflow-y-auto">
-                        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                <Filter className="w-5 h-5" />
-                                Filters
-                            </h2>
+                    {/* Filter Content */}
+                    <div
+                        className={`
+                            ${showFilters ? 'translate-x-0' : '-translate-x-full'}
+                            md:translate-x-0
+                            fixed md:relative
+                            top-0 left-0
+                            w-4/5 md:w-full
+                            h-full md:h-auto
+                            bg-white
+                            p-6 md:p-0
+                            shadow-2xl md:shadow-none
+                            overflow-y-auto
+                            transition-transform duration-300 ease-in-out
+                            z-50 md:z-0
+                        `}
+                    >
+                        <div className="bg-white rounded-2xl md:shadow-lg p-6">
+                            {/* Mobile Close Button */}
+                            <div className="flex items-center justify-between mb-4 md:mb-0">
+                                <h2 className="text-xl font-bold flex items-center gap-2">
+                                    <Filter className="w-5 h-5" />
+                                    Filters
+                                </h2>
+                                <button
+                                    className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
+                                    onClick={() => setShowFilters(false)}
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
 
                             {/* Stops Filter */}
                             <div className="mb-6">
