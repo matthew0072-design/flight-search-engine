@@ -174,7 +174,7 @@ export function SearchForm({ onSearch }: Props) {
                             value={departureDate}
                             onChange={(e) => setDepartureDate(e.target.value)}
                             min={today}
-                            className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
+                            className="date-input w-full pl-10 pr-12 md:pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all"
                             required
                         />
                     </div>
@@ -189,6 +189,7 @@ export function SearchForm({ onSearch }: Props) {
                 <Search className="w-5 h-5" />
                 Search Flights
             </button>
+
         </form>
     )
 }

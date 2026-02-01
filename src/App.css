@@ -4,4 +4,13 @@
   padding: 1rem;
   text-align: center;
 }
+.date-input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Chrome / Safari calendar icon spacing */
+.date-input::-webkit-calendar-picker-indicator {
+  margin-right: 8px;
+}
 
