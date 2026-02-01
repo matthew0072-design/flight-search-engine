@@ -3,10 +3,11 @@
 A modern, responsive flight search application that allows users to explore, filter, and compare flight options in real time, with a strong focus on performance, usability, and clean engineering.
 
 ## 🚀 Live Demo
-[View Live Demo](#) _(Will be updated after deployment)_
+👉 [View Live Demo](https://www.flight-search-engine-eta.vercel.app)
 
 ## 🎥 Demo Video
-[Watch Loom Demo](#) _(Will be added after recording)_
+👉 [Watch Loom Demo](https://www.loom.com/share/4fcc60d972a74f9684c4b7ef3153d9de)
+
 
 ## ✨ Features
 
@@ -77,13 +78,16 @@ src/
 ├── api/
 │   └── amadeus.ts          # API client with authentication
 ├── components/
-│   ├── Home.tsx            # Main component with search, filters, and results
+│   
+│   ├── FlightSkeleton.tsx      # Skeleton Loader
 │   └── SearchForm.tsx      # Search input form component
+|   pages/
+|   └── Home.tsx            # Main Page With Search, filters, and Results
 ├── hooks/
 │   └── useFlights.ts       # TanStack Query hook for flight data
 ├── types/
-│   ├── flight.ts           # Flight data interface
-│   └── amadeus-types.ts    # Complete Amadeus API response types
+│   ├── flight.ts           # Flight data interface & Complete Amadeus API response types
+│   
 └── utils/
     └── normalizeFlights.ts # Transform API responses to application format
 ```
